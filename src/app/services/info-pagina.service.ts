@@ -9,14 +9,25 @@ export class InfoPaginaService {
 
   info: InfoPagina = {};
   cargada = false;
-  constructor( private http: HttpClient) { 
-    console.log('InfoPagina cargado');
+  equipo: any[] = [];
 
+  constructor( private http: HttpClient) { 
+    this.cargarInfo();
+    this.cargarEquipo();
+  }
+
+  private cargarInfo() {
     // Leer archivo json
     this.http.get('assets/data/data-pagina.json').subscribe ( (resp: InfoPagina) => {
       this.cargada = true;
       this.info = resp;
-      console.log( resp ) ;
+    });
+  }
+
+  private cargarEquipo() {
+    // Leer archivo json
+    this.http.get('https://miweb-angular-default-rtdb.europe-west1.firebasedatabase.app/equipo.json').subscribe ( (resp: any) => {
+      this.equipo = resp;
     });
   }
 }
